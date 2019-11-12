@@ -1,0 +1,44 @@
+download node / node -v, npm -v
+download yarn / yarn -v
+
+1- npm install -g create-react-app
+2- create-react-app "nome-projeto"
+3- pode deletar o readme
+
+(package.json fica todas dependencias da aplicação)
+
+4- npm start para rodar a aplicação
+5- abrir src e deletar: 
+app.css
+app.test.json
+index.css
+logo.svg
+
+6- index.js remover import do css
+7- app.js deletar import css, logo e deletar tudo dentro da div className="App"
+
+toda class que extends Component é uma classe component do react
+
+component é um conjunto de parte visual (html)
+parte funcional, (js) e a parte de estilização
+
+todo component tem um método obrigatório que é o render() {}
+
+8 - ir na pasta src e criar uma pasta components
+9 - criar os components, pasta referente ao component e criar um index pra ele
+10- toda ve que criar um component, tem que exportar ele depois importar no App.js
+11 - instalar axios para acessar informações de uma api externa
+12 - yarn add axios
+13- apos instalar axios, criar uma pasta chamada services dentro de src
+14- criar um arquivo api.js dentro dela
+ {
+   //conexoes com serviços externos
+
+  import axios from 'axios';
+
+  //todas requisições partiram dessa url
+  const api = axios.create({baseURL: 'https://rocketseat-node.herokuapp.com/api'});
+
+  export default api;
+}
+15- depois de criar tudo, importar no app.js
