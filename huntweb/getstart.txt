@@ -42,3 +42,17 @@ todo component tem um método obrigatório que é o render() {}
   export default api;
 }
 15- depois de criar tudo, importar no app.js
+
+16- yarn add react-router-dom para trabahar com as rotas no react
+17- criar um arquivo no src chamado routes.js
+18 - no arquivo importar 
+19 - para receber parametro através da rota /:'nome do parametro'
+
+import React from 'react';
+
+import { BrowserRouter, Switch, Route} from 'ract-router-dom';
+
+e as páginas existentes
+
+
+NPM START PARA RODAR O projeto

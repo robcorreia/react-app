@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
+import { Link } from 'react-router-dom';
 
 import './styles.css'
 
@@ -7,6 +8,8 @@ export default class Main extends Component {
   //armazenar variaveis no react
   state = {
     products: [],
+    productInfo: {},
+    page: 1,
   }
 
   //metodo executado assim que o component for mostrado em tela
@@ -14,17 +17,45 @@ export default class Main extends Component {
     this.loadProducts();
   }
 
-  loadProducts = async () => {
-    const response = await api.get('/products');
+  loadProducts = async (page = 1) => {
+    const response = await api.get(`/products?page=${page}`);
 
     /* console.log(response.data.docs); */
 
+    //ta pegando o restante de todas informações e armaenando na variavel prodcInfo (dados que vem do response.data)
+    const { docs, ...productInfo } = response.data;
+
     //aqui eu seto um valor dentro da variavel products que está no state 
-    this.setState( { products: response.data.docs});
+    this.setState( { products: docs, productInfo, page });
   };
 
+  //metodos para trocar de página
+
+  prevPage = () => {
+    const { page, productInfo } = this.state;
+
+    if(page === 1) return;
+
+    const pageNumber = page - 1;
+
+    this.loadProducts(pageNumber);
+  }
+
+  nextPage = () => {
+    const { page, productInfo } = this.state;
+
+    //se a pagina for a ultima ele retorna (.pages pega o total de paginas)
+    if( page === productInfo.pages) return;
+
+    const pageNumber = page + 1;
+
+    this.loadProducts(pageNumber);
+  }
+
+
+
   render() {
-    const { products} = this.state; //desestruturação do objeto
+    const { products, page, productInfo} = this.state; //desestruturação do objeto
     
     /* return {<h1>Contagem de produtos: {this.state.products.length}</h1>; */
     return (
@@ -35,10 +66,14 @@ export default class Main extends Component {
             <strong>{product.title}</strong>
             <p>{product.description}</p>
 
-            <a href="">Acessar</a>
+            <Link to={`/products/${product._id}`}>Acessar</Link>
           </article>
         
         ))}
+        <div className="actions">
+          <button disabled={page === 1} onClick={this.prevPage}>Anterior</button>
+          <button disabled={page === productInfo.pages} onClick={this.nextPage}>Próximo</button>
+        </div>
       </div>
     )
   }
